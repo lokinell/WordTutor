@@ -1,1 +1,3 @@
-﻿This is a word tutor for android.
+﻿How to install environment:
+1) copy mysql-connector-java-5.1.14.bin.jar to glassfish domain lib/ext
+2) create jdbc 链接池jdbc/MySqlDS 通过glassfish console
