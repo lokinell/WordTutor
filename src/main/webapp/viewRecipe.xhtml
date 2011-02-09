@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+<ui:composition template="/template.xhtml">
+	<ui:define name="pageTitle">
+		<h:outputText value="#{i18n['viewRecipe.title']}"></h:outputText>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form id="mainForm">
+			<h:panelGrid id="recipeContent" columns="3"
+				columnClasses="FirstColumn, SecondColumn, ThirdColumn">
+
+				<rich:panel id="leftTabs" switchType="ajax">
+					<a4j:commandButton value="新建病人信息"
+						onclick="Richfaces.showModalPanel('patientInput');" />
+					<rich:modalPanel id="patientInput" left="300" top="100">
+						<f:facet name="header">
+							<h:outputText value="病人注册" />
+						</f:facet>
+						<h:form>
+							<h:panelGrid columns="2">
+								<h:outputText value="姓名" />
+								<h:inputText value="#{patientBean.currentPatient.name}"
+									required="true" />
+								<h:outputText value="年龄" />
+								<h:inputText id="age" value="#{patientBean.currentPatient.age}"
+									required="true">
+									<f:convertNumber for="age" minIntegerDigits="0"
+										maxFractionDigits="100" />
+								</h:inputText>
+								<h:outputText value="性别" />
+								<h:selectOneListbox value="#{patientBean.currentPatient.gender}"
+									size="1">
+									<f:selectItem itemLabel="男" itemValue="MALE" />
+									<f:selectItem itemLabel="女" itemValue="FEMALE" />
+								</h:selectOneListbox>
+								<h:outputText value="电话" />
+								<h:inputText value="#{patientBean.currentPatient.phone}" />
+								<h:outputText value="住址" />
+								<h:inputText value="#{patientBean.currentPatient.address}" />
+								<a4j:commandButton value="注册"
+									actionListener="#{patientBean.registerActionListener}"
+									onclick="Richfaces.hideModalPanel('patientInput');"
+									reRender="patientList" />
+								<h:commandButton
+									onclick="Richfaces.hideModalPanel('patientInput');" value="取消" />
+							</h:panelGrid>
+						</h:form>
+					</rich:modalPanel>
+
+					<rich:extendedDataTable rowKeyVar="rkv" height="400px"
+						width="300px" id="patientList" rows="40" selectionMode="single"
+						selection="#{patientBean.selection}"
+						value="#{patientBean.patients}" var="patient" sortMode="single">
+						<a4j:support event="onselectionchange"
+							action="#{patientBean.takeSelection}"
+							reRender="toolbar, recipeGrid, recipeDetial">
+						</a4j:support>
+						<rich:column id="name" sortable="true" sortBy="#{patient.name}"
+							filterBy="#{patient.name}" filterEvent="onkeyup">
+							<f:facet name="header">
+								<h:outputText styleClass="headerText" value="姓名" />
+							</f:facet>
+							<h:outputText value="#{patient.name}" />
+						</rich:column>
+						<rich:column id="age">
+							<f:facet name="header">
+								<h:outputText styleClass="headerText" value="年龄" />
+							</f:facet>
+							<h:outputText value="#{patient.age}" />
+						</rich:column>
+						<rich:column id="status" sortable="true"
+							sortBy="#{patient.status}">
+							<f:facet name="header">
+								<h:outputText styleClass="headerText" value="看病状态" />
+							</f:facet>
+							<h:outputText value="#{patient.status}" />
+						</rich:column>
+					</rich:extendedDataTable>
+				</rich:panel>
+
+				<rich:panel>
+					<f:facet name="header">
+						<h:outputText value="选中病人的处方" />
+					</f:facet>
+					<rich:toolBar id="toolbar" height="30">
+						<h:commandButton id="newRecipe" value="新建处方"
+							action="#{recipeBean.newRecipe}"
+							disabled="#{patientBean.disabled}" />
+						<h:commandButton id="printRecipe" value="打印处方" />
+					</rich:toolBar>
+					<rich:scrollableDataTable id="recipeGrid" selectionMode="single"
+						value="#{recipeBean.recipesByPatient}" width="298px"
+						selection="#{recipeBean.selection}" var="recipe"
+						rowKeyVar="recipeIndex">
+						<a4j:support event="onselectionchange"
+							action="#{recipeBean.takeSelection}"
+							reRender="recipeDetial, toolbar">
+						</a4j:support>
+						<rich:column>
+							<h:outputText value="#{recipe.createDate}" />
+						</rich:column>
+					</rich:scrollableDataTable>
+				</rich:panel>
+
+				<rich:panel id="printPage">
+					<f:facet name="header">
+						<h:outputText value="处方明细" />
+					</f:facet>
+					<rich:dataGrid id="recipeDetial"
+						value="#{recipeBean.currentMedicineInfos}" columns="2"
+						var="medicineInfo" rowKeyVar="mIndex">
+						<h:panelGrid columns="3">
+							<h:outputText value="#{medicineInfo.medicine.name}" />
+							<h:outputText value="#{medicineInfo.quantity}" />
+							<h:outputText value="#{medicineInfo.price}" />
+						</h:panelGrid>
+					</rich:dataGrid>
+				</rich:panel>
+				<script type="text/javascript">
+                    new printPartOfDocument('mainForm:printRecipe', 'mainForm:printPage');
+                </script>
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

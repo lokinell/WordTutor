@@ -1,0 +1,95 @@
+.patientList {
+	width: 10%;
+	height: 80%;
+	position: relative;
+	float: left;
+}
+
+.ContentPanels {
+	width: 89%;
+	height: 90%;
+	position: relative;
+	float: right;
+}
+
+.RecipePanel {
+	width: 33%;
+	height: 90%;
+	position: relative;
+	float: left;
+}
+
+.MedicinePanel {
+	width: 45%;
+	height: 90%;
+	position: relative;
+	float: right;
+}
+
+.ListBox {
+	width: 200;
+	height: 100%;
+	position: relative;
+	float: left;
+}
+
+.LeftTabs {
+	width: 20%;
+	position: relative;
+	float: left;
+}
+
+.RightContent {
+	width: 79%;
+	position: relative;
+}
+
+.ContentClass {
+	width: 80%;
+	height: 100%;
+}
+
+.RecipeGrid {
+	padding: 0;
+	margin: 0;
+}
+
+.FirstColumn {
+	width: 300px;
+	height: 90%;
+	vertical-align: top;
+}
+
+.SecondColumn {
+	width: 300px;
+	height: 90%;
+	vertical-align: top;
+}
+
+.ThirdColumn {
+	width: 628px;
+	height: 90%;
+	vertical-align: top;
+}
+
+.TabPanels {
+	width: 20%;
+	position: relative;
+	float: left;
+}
+
+.View_RecipeContent {
+	vertical-align: top;
+}
+
+.MedicineClass {
+	width: 70px;
+	height: 27px;
+}
+
+.MedicineColumnClass input[type="button"]{
+	font-size:14px;
+	width: 100%;
+	height: 27px;
+}
+

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+  <persistence-unit name="recipeUnit" transaction-type="JTA">
+    <!-- The demo will run out of the box with the DefaultDS HQSL datasource provided you have copied eclipselink.jar to the \common\lib directory.-->
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <jta-data-source>jdbc/MySqlDS</jta-data-source>
+    
+    <class>com.medicine.recipe.model.User</class>
+    <class>com.medicine.recipe.model.Medicine</class>
+    <class>com.medicine.recipe.model.MedicineInfo</class>
+    <class>com.medicine.recipe.model.Patient</class>
+    <class>com.medicine.recipe.model.Recipe</class>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+    <shared-cache-mode>NONE</shared-cache-mode>
+    <properties>
+      <!-- turn off DDL gen (2 properties below) for production and retest environments -->
+      <property name="eclipselink.ddl-generation" value="create-tables"/>
+      <property name="eclipselink.ddl-generation.output-mode" value="database"/>
+      <property name="eclipselink.logging.level" value="FINEST"/>
+    </properties>
+  </persistence-unit>
+</persistence>

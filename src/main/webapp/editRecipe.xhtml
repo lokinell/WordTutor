@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+<ui:composition template="/template.xhtml">
+	<ui:define name="pageTitle">
+		<h:outputText value="#{i18n['editRecipe.title']}"></h:outputText>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form id="main">
+			<h:panelGrid columns="2">
+				<rich:panel id="recipePanel" style="width:500px;">
+					<f:facet name="header">
+						<h:outputText value="中药处方" />
+					</f:facet>
+
+					<div style="height: 600px; width: 480px;">
+					  <rich:dataGrid id="recipeGrid"  width="100%"
+						cellspacing="0" styleClass="RecipeGrid"
+						value="#{recipeBean.recipeMedicines}" 
+						var="medicineItem"
+						rowKeyVar="recipeIndex" columns="2">
+						<h:panelGrid columns="3">
+							<h:outputText value="#{medicineItem.medicine.name}" />
+							<rich:inputNumberSpinner value="#{medicineItem.quantity}"
+								step="5" />
+							<a4j:commandButton value="X" title="从处方上删除该药"
+								action="#{recipeBean.removeMedicineAction}"
+								reRender="recipeGrid,medicineGrid">
+								<a4j:actionparam name="index" value="#{recipeIndex}" />
+							</a4j:commandButton>
+						</h:panelGrid>
+					   </rich:dataGrid>
+						<div>
+							<h:panelGrid columns="2">
+								<h:outputText value="处方剂量" />
+								<rich:inputNumberSpinner value="#{recipeBean.doses}" step="1" style="width : 20px;" />
+							</h:panelGrid>
+						</div>
+					</div>
+
+					<div align="center"><h:commandButton value="保存"
+						action="#{recipeBean.saveRecipeAction}" /> <h:outputText value="  " />
+					<a4j:commandButton value="清除" action="#{recipeBean.clearAction}"
+						reRender="recipeGrid,medicineGrid" /> <h:outputText value="  " />
+					<h:commandButton value="返回" action="#{recipeBean.backAction}" /></div>
+				</rich:panel>
+
+				<rich:tabPanel id="medicineGrid" switchType="ajax">
+					<rich:tab label="药1">
+						<rich:dataGrid value="#{medicineBean.medicineItems}"
+							columnClasses="MedicineColumnClass" var="medicineItem"
+							rowKeyVar="rowIdx" columns="10" first="0" elements="200">
+							<a4j:commandButton value="#{medicineItem.medicine.name}"
+								reRender="recipeGrid,medicineGrid" 
+								disabled="#{medicineItem.disabled}"
+								action="#{recipeBean.addMedicineAction}">
+								<a4j:actionparam name="index" value="#{rowIdx}" />
+							</a4j:commandButton>
+						</rich:dataGrid>
+					</rich:tab>
+					<rich:tab label="药2">
+						<rich:dataGrid value="#{medicineBean.medicineItems}"
+							columnClasses="MedicineColumnClass" var="medicineItem"
+							rowKeyVar="rowIdx" columns="10" first="200" elements="200">
+							<a4j:commandButton value="#{medicineItem.medicine.name}"
+								reRender="recipeGrid,medicineGrid" 
+								disabled="#{medicineItem.disabled}"
+								action="#{recipeBean.addMedicineAction}">
+								<a4j:actionparam name="index" value="#{rowIdx}" />
+							</a4j:commandButton>
+						</rich:dataGrid>
+					</rich:tab>
+					<rich:tab label="药3">
+						<rich:dataGrid value="#{medicineBean.medicineItems}"
+							columnClasses="MedicineColumnClass" var="medicineItem"
+							rowKeyVar="rowIdx" columns="10" first="400" elements="200">
+							<a4j:commandButton value="#{medicineItem.medicine.name}"
+								reRender="recipeGrid,medicineGrid" 
+								disabled="#{medicineItem.disabled}"
+								action="#{recipeBean.addMedicineAction}">
+								<a4j:actionparam name="index" value="#{rowIdx}" />
+							</a4j:commandButton>
+						</rich:dataGrid>
+					</rich:tab>
+					<rich:tab label="药4">
+						<rich:dataGrid value="#{medicineBean.medicineItems}"
+							columnClasses="MedicineColumnClass" var="medicineItem"
+							rowKeyVar="rowIdx" columns="10" first="600" elements="200">
+							<a4j:commandButton value="#{medicineItem.medicine.name}"
+								reRender="recipeGrid,medicineGrid" 
+							    disabled="#{medicineItem.disabled}"
+								action="#{recipeBean.addMedicineAction}">
+								<a4j:actionparam name="index" value="#{rowIdx}" />
+							</a4j:commandButton>
+						</rich:dataGrid>
+					</rich:tab>
+				</rich:tabPanel>
+
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>
