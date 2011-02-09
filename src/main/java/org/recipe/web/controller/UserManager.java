@@ -60,12 +60,17 @@ public class UserManager extends AbstractManager {
 			e.printStackTrace();
 		}
 
-		if (currentUser.getRole() == Role.ASSISTANT)
-			return "viewRecipe";
-		else if (currentUser.getRole() == Role.DOCTOR)
-			return "editRecipe";
-		else
-			return "user";
+		if(!currentUser.isNew()){
+			if (currentUser.getRole() == Role.ASSISTANT)
+				return "viewRecipe";
+			else if (currentUser.getRole() == Role.DOCTOR)
+				return "editRecipe";
+			else
+				return null;
+		}else{
+			addMessage("用户名或密码不正确！", FacesMessage.SEVERITY_ERROR);
+			return null;
+		}
 	}
 
 	public String createUser() {
@@ -102,7 +107,7 @@ public class UserManager extends AbstractManager {
 		if (getCurrentUser().getRole() == Role.ASSISTANT)
 			return "viewRecipe";
 		else if (getCurrentUser().getRole() == Role.DOCTOR)
-			return "editRecipe";
+			return "viewRecipe";
 		else
 			return "user";
 	}
