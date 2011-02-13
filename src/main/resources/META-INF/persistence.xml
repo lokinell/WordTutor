@@ -10,6 +10,9 @@
     <class>com.medicine.recipe.model.MedicineInfo</class>
     <class>com.medicine.recipe.model.Patient</class>
     <class>com.medicine.recipe.model.Recipe</class>
+    <class>clinic.model.Herb</class>
+    <class>clinic.model.Prescription</class>
+    <class>clinic.model.Drug</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <shared-cache-mode>NONE</shared-cache-mode>
     <properties>
