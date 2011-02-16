@@ -20,39 +20,39 @@
 				columnClasses="FirstColumn, SecondColumn, ThirdColumn">
 
 				<rich:panel id="leftTabs" switchType="ajax">
-					<a4j:commandButton value="新建病人信息"
+					<a4j:commandButton value="æ–°å»ºç—…äººä¿¡æ�¯"
 						onclick="Richfaces.showModalPanel('patientInput');" />
 					<rich:modalPanel id="patientInput" left="300" top="100">
 						<f:facet name="header">
-							<h:outputText value="病人注册" />
+							<h:outputText value="ç—…äººæ³¨å†Œ" />
 						</f:facet>
 						<h:form>
 							<h:panelGrid columns="2">
-								<h:outputText value="姓名" />
+								<h:outputText value="å§“å��" />
 								<h:inputText value="#{patientBean.currentPatient.name}"
 									required="true" />
-								<h:outputText value="年龄" />
+								<h:outputText value="å¹´é¾„" />
 								<h:inputText id="age" value="#{patientBean.currentPatient.age}"
 									required="true">
 									<f:convertNumber for="age" minIntegerDigits="0"
 										maxFractionDigits="100" />
 								</h:inputText>
-								<h:outputText value="性别" />
+								<h:outputText value="æ€§åˆ«" />
 								<h:selectOneListbox value="#{patientBean.currentPatient.gender}"
 									size="1">
-									<f:selectItem itemLabel="男" itemValue="MALE" />
-									<f:selectItem itemLabel="女" itemValue="FEMALE" />
+									<f:selectItem itemLabel="ç”·" itemValue="MALE" />
+									<f:selectItem itemLabel="å¥³" itemValue="FEMALE" />
 								</h:selectOneListbox>
-								<h:outputText value="电话" />
+								<h:outputText value="ç”µè¯�" />
 								<h:inputText value="#{patientBean.currentPatient.phone}" />
-								<h:outputText value="住址" />
+								<h:outputText value="ä½�å�€" />
 								<h:inputText value="#{patientBean.currentPatient.address}" />
-								<a4j:commandButton value="注册"
+								<a4j:commandButton value="æ³¨å†Œ"
 									actionListener="#{patientBean.registerActionListener}"
 									onclick="Richfaces.hideModalPanel('patientInput');"
 									reRender="patientList" />
 								<h:commandButton
-									onclick="Richfaces.hideModalPanel('patientInput');" value="取消" />
+									onclick="Richfaces.hideModalPanel('patientInput');" value="å�–æ¶ˆ" />
 							</h:panelGrid>
 						</h:form>
 					</rich:modalPanel>
@@ -68,20 +68,20 @@
 						<rich:column id="name" sortable="true" sortBy="#{patient.name}"
 							filterBy="#{patient.name}" filterEvent="onkeyup">
 							<f:facet name="header">
-								<h:outputText styleClass="headerText" value="姓名" />
+								<h:outputText styleClass="headerText" value="å§“å��" />
 							</f:facet>
 							<h:outputText value="#{patient.name}" />
 						</rich:column>
 						<rich:column id="age">
 							<f:facet name="header">
-								<h:outputText styleClass="headerText" value="年龄" />
+								<h:outputText styleClass="headerText" value="å¹´é¾„" />
 							</f:facet>
 							<h:outputText value="#{patient.age}" />
 						</rich:column>
 						<rich:column id="status" sortable="true"
 							sortBy="#{patient.status}">
 							<f:facet name="header">
-								<h:outputText styleClass="headerText" value="看病状态" />
+								<h:outputText styleClass="headerText" value="çœ‹ç—…çŠ¶æ€�" />
 							</f:facet>
 							<h:outputText value="#{patient.status}" />
 						</rich:column>
@@ -90,13 +90,13 @@
 
 				<rich:panel>
 					<f:facet name="header">
-						<h:outputText value="选中病人的处方" />
+						<h:outputText value="é€‰ä¸­ç—…äººçš„å¤„æ–¹" />
 					</f:facet>
 					<rich:toolBar id="toolbar" height="30">
-						<h:commandButton id="newRecipe" value="新建处方"
+						<h:commandButton id="newRecipe" value="æ–°å»ºå¤„æ–¹"
 							action="#{recipeBean.newRecipe}"
 							disabled="#{patientBean.disabled}" />
-						<h:commandButton id="printRecipe" value="打印处方" />
+						<h:commandButton id="printRecipe" value="æ‰“å�°å¤„æ–¹" />
 					</rich:toolBar>
 					<rich:scrollableDataTable id="recipeGrid" selectionMode="single"
 						value="#{recipeBean.recipesByPatient}" width="298px"
@@ -114,7 +114,7 @@
 
 				<rich:panel id="printPage">
 					<f:facet name="header">
-						<h:outputText value="处方明细" />
+						<h:outputText value="å¤„æ–¹æ˜Žç»†" />
 					</f:facet>
 					<rich:dataGrid id="recipeDetial"
 						value="#{recipeBean.currentMedicineInfos}" columns="2"

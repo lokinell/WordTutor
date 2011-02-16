@@ -4,55 +4,55 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
 <head>
-<title>用户登录</title>
+<title>ç”¨æˆ·ç™»å½•</title>
 </head>
 <body>
 <div align="center"><h:form>
 	<h:panelGrid id="loginPanel" columns="2"
 		rendered="#{UserBean.loginPanelVisible}">
-		<h:outputText value="用户名" />
+		<h:outputText value="ç”¨æˆ·å��" />
 		<h:panelGroup>
 		<h:inputText id="name" value="#{UserBean.currentUser.name}"
 			required="true" />
 		<font color="#FF0000"> <h:message for="name" /></font>
 		</h:panelGroup>
-		<h:outputText value="密码" />
+		<h:outputText value="å¯†ç �" />
 		<h:panelGroup>
 		<h:inputSecret id="password" value="#{UserBean.currentUser.password}"
 			required="true" />
 		<font color="#FF0000"><h:message for="password" /></font></h:panelGroup>
-		<h:commandButton value="登录" action="#{UserBean.doLogin}" />
-		<h:commandButton value="创建用户" action="#{UserBean.createUser}" />
+		<h:commandButton value="ç™»å½•" action="#{UserBean.doLogin}" />
+		<h:commandButton value="åˆ›å»ºç”¨æˆ·" action="#{UserBean.createUser}" />
 	</h:panelGrid>
 
 	<h:panelGrid id="createUserPanel" columns="2"
 		rendered="#{UserBean.createUserPanelVisible}">
-		<h:outputText value="用户名:" />
+		<h:outputText value="ç”¨æˆ·å��:" />
 		<h:panelGroup>
 		<h:inputText id="createName" value="#{UserBean.currentUser.name}"
 			required="true" />
 		<font color="#FF0000"> <h:message for="createName" /></font>
 		</h:panelGroup>
-		<h:outputText value="设定密码:" />
+		<h:outputText value="è®¾å®šå¯†ç �:" />
 		<h:panelGroup>
 		<h:inputSecret id="createPassword"
 			value="#{UserBean.currentUser.password}" required="true" />
 		<font color="#FF0000"> <h:message id="passwordMessage" for="createPassword" /></font>
 		</h:panelGroup>
-		<h:outputText value="请再次输入密码:" />
+		<h:outputText value="è¯·å†�æ¬¡è¾“å…¥å¯†ç �:" />
 		<h:panelGroup>
 		<h:inputSecret id="createPasswordAgain"
 			value="#{UserBean.passwordAgain}" required="true" />
 		<font color="#FF0000"> <h:message for="createPasswordAgain" /></font>
         </h:panelGroup>
-		<h:outputText value="用户角色:" />
+		<h:outputText value="ç”¨æˆ·è§’è‰²:" />
 		<h:selectOneListbox id="userRole" value="#{UserBean.currentUser.role}"
 			size="1">
-			<f:selectItem itemLabel="医生" itemValue="DOCTOR" />
-			<f:selectItem itemLabel="助手" itemValue="ASSISTANT" />
-			<f:selectItem itemLabel="药剂师" itemValue="DRUGGIST" />
+			<f:selectItem itemLabel="åŒ»ç”Ÿ" itemValue="DOCTOR" />
+			<f:selectItem itemLabel="åŠ©æ‰‹" itemValue="ASSISTANT" />
+			<f:selectItem itemLabel="è�¯å‰‚å¸ˆ" itemValue="DRUGGIST" />
 		</h:selectOneListbox>
-		<h:commandButton value="创建我的用户" action="#{UserBean.doCreateUser}" actionListener="#{UserBean.validatePassword}"/>
+		<h:commandButton value="åˆ›å»ºæˆ‘çš„ç”¨æˆ·" action="#{UserBean.doCreateUser}" actionListener="#{UserBean.validatePassword}"/>
 	</h:panelGrid>
 
 </h:form></div>

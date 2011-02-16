@@ -32,7 +32,7 @@ public class MedicineInfo implements Serializable {
 	private Recipe recipe;
 
 	@Column(name = "MEDICINE_QUANTITY")
-	private int quantity;
+	private int quantity = 5;
 
 	@Column(name = "MEDICINE_PRICE")
 	private double price;

@@ -1,6 +1,7 @@
 package clinic.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -96,7 +97,7 @@ public class PrescriptionManager extends AbstractManager {
 				.toString());
 		Candidate candidate = candidates.get(index);
 		candidate.setSelected(true);
-		Drug drug = new Drug(prescription, candidate.getHerb(), 10);
+		Drug drug = new Drug(prescription, candidate.getHerb(), candidate.getHerb().getMostUsedDose());
 		prescription.addDrug(drug);
 	}
 	
@@ -109,6 +110,15 @@ public class PrescriptionManager extends AbstractManager {
 		Drug drug = prescription.removeDrug(index);
 		Candidate candidate = findCandidate(drug.getHerb());
 		candidate.setSelected(false);		
+	}
+
+	public List<DrugFace> getDrugs() {
+		List<DrugFace> wrappers = new ArrayList<DrugFace>();
+		for (Drug drug : prescription.getDrugs()) {
+			DrugFace wrapper = new DrugFace(drug);
+			wrappers.add(wrapper);
+		}
+		return wrappers;
 	}
 	
 	public void onClear() {
