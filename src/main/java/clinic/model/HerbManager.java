@@ -61,12 +61,10 @@ public class HerbManager extends AbstractManager {
 		@SuppressWarnings("unchecked")
 		@Override
 		public List<Drug> execute(EntityManager em) {
-			String query = "select m from Drug as m where m.herb = :herb";
-			Query q = em.createQuery(query);
+			Query q = em.createNamedQuery("Drugs.byHerb");
 			q.setParameter("herb", herb);
 			return q.getResultList();
 		}
-		
 	}
 	
 	public void doStatistic(Herb herb) {

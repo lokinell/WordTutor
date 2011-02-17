@@ -3,8 +3,10 @@ package clinic.model;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
@@ -25,7 +27,12 @@ public class PrescriptionManager extends AbstractManager {
 	@ManagedProperty(value="#{herbManager}")
 	private HerbManager herbManager;
 
+	// The prescription being edited;
+	private Prescription prescription = new Prescription();	
+
 	private int herbIndex;
+	
+	private Set<Integer> updates = new HashSet<Integer>();
 	
 	public PrescriptionManager() {
 		super();
@@ -46,12 +53,6 @@ public class PrescriptionManager extends AbstractManager {
 	public void setHerbManager(HerbManager herbManager) {
 		this.herbManager = herbManager;
 	}
-
-	// The prescription being edited;
-	private Prescription prescription = new Prescription();
-	
-	private List<Candidate> candidates;
-	
 	
 	public Prescription getPrescription() {
 		return prescription;
@@ -60,68 +61,39 @@ public class PrescriptionManager extends AbstractManager {
 	public void setPrescription(Prescription prescription) {
 		this.prescription = prescription;
 	}
-
-	public List<Candidate> getCandidates() {
-		if (candidates==null) {
-			List<Herb> herbs = getHerbManager().getHerbs();
-			candidates = new ArrayList<Candidate>();
-			for (Herb herb : herbs) {
-				Candidate candidate = new Candidate(herb);
-				candidates.add(candidate);
-			}
-		}
-		return candidates;
-	}
 	
-	public void setCandidates(List<Candidate> candidates) {
-		this.candidates = candidates;
+	public Set<Integer> getUpdates() {
+		return updates;
 	}
-	
-	public Candidate findCandidate(Herb herb) {
-		if (candidates!=null) {
-			for (Candidate candidate : candidates) {
-				if (candidate.getHerb()==herb)
-					return candidate;
 
-				if (candidate.getHerb().equals(herb))
-					return candidate;
-			}
-		}
-		return null;
+	public void setUpdates(Set<Integer> updates) {
+		this.updates = updates;
 	}
 
 	public void unselectAll() {
-		if (candidates==null) {
-			candidates = new ArrayList<Candidate>();
-			for (Candidate candidate : candidates) {
-				candidate.setSelected(false);				
-			}
-		}		
+		for (Herb herb: herbManager.getHerbs()) {
+			herb.setSelected(false);				
+		}
 	}
 
 	public void onAddDrug() {
-//		@SuppressWarnings("rawtypes")
-//		Map requestParameterMap = FacesContext.getCurrentInstance()
-//				.getExternalContext().getRequestParameterMap();
-//		int index = Integer.parseInt(requestParameterMap.get("index")
-//				.toString());
-		Candidate candidate = candidates.get(herbIndex);
-		candidate.setSelected(true);
-		Drug drug = new Drug(prescription, candidate.getHerb(), candidate.getHerb().getMostUsedDose());
+		Herb herb = herbManager.getHerbs().get(herbIndex);
+		herb.setSelected(true);
+		Drug drug = new Drug(herb);
 		prescription.addDrug(drug);
+		
+		// Specify the row to update
+		updates.clear();
+		updates.add(new Integer(herbIndex));
 	}
 	
 	public void onRemoveDrug() {
-		/*
-		@SuppressWarnings("rawtypes")
-		Map requestParameterMap = FacesContext.getCurrentInstance()
-				.getExternalContext().getRequestParameterMap();
-		int index = Integer.parseInt(requestParameterMap.get("index")
-				.toString());
-		*/
 		Drug drug = prescription.removeDrug(herbIndex);
-		Candidate candidate = findCandidate(drug.getHerb());
-		candidate.setSelected(false);		
+		drug.getHerb().setSelected(false);		
+
+		// Specify the row to update
+		// updates.clear();
+		// updates.add(new Integer(herbIndex));
 	}
 
 	public List<DrugFace> getDrugs() {

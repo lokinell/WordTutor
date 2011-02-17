@@ -55,7 +55,10 @@ public class Herb implements Serializable {
 
 	@Transient
 	transient private Statistic statistic = null;
-	
+
+	@Transient
+	private boolean selected = false;
+
 	public Long getId() {
 		return id;
 	}
@@ -136,6 +139,14 @@ public class Herb implements Serializable {
 		this.statistic = statistic;
 	}
 	
+	public boolean isSelected() {
+		return selected;
+	}
+
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+	}
+
 	/**
 	 * 
 	 * @return 0f means that this herb has never been used.
@@ -174,7 +185,7 @@ public class Herb implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Medicine[name=" + name + ",productDate=" + productDate + "]";
+		return "Herb[" + name + ", " + alias + "]";
 	}
 
 }
