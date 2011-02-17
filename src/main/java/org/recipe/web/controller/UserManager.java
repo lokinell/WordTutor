@@ -77,7 +77,7 @@ public class UserManager extends AbstractManager {
 	public void validatePassword(ActionEvent event) {
 		System.out.println("validate password...");
 		if (!this.passwordAgain.equals(currentUser.getPassword())) {
-			addMessage("createPasswordAgain", "密码两次输入不一致",
+			addMessage("createPasswordAgain", "密�?两次输入�?一致",
 					FacesMessage.SEVERITY_ERROR);
 		}
 	}

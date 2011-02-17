@@ -1,21 +1,13 @@
 package clinic.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
 @Entity
-@NamedQuery(name="Drugs.byPrescriptionID", query="select m from Drug as m where m.prescription.id=:prescriptionID")
+@NamedQuery(name="Drugs.byPrescription", query="select m from Drug as m where m.prescription=:prescriptionID")
 public class Drug extends AbstractEntity {
 	private static final long serialVersionUID = -5160654970742215520L;
 	
@@ -28,17 +20,17 @@ public class Drug extends AbstractEntity {
 	private Herb herb;
 
 	@Column
-	private int doses = 0;
+	private float dose = 0F;
 
 	public Drug() {
 		super();
 	}
 	
-	public Drug(Prescription prescription, Herb herb, int doses) {
+	public Drug(Prescription prescription, Herb herb, float dose) {
 		super();
 		this.herb = herb;
 		this.prescription = prescription;
-		this.doses = doses;
+		this.dose = dose;
 	}
 
 	public Herb getHerb() {
@@ -57,35 +49,41 @@ public class Drug extends AbstractEntity {
 		this.prescription = prescription;
 	}
 
-	public int getDoses() {
-		return doses;
+	public float getDose() {
+		return dose;
 	}
 
-	public void setDoses(int doses) {
-		this.doses = doses;
+	public void setDose(float dose) {
+		this.dose = dose;
 	}
 
-	public Integer getDosesInteger() {
-		return new Integer (doses);
+	public void setDoseFloat(Float dose) {
+		if(dose==null)
+			this.dose = 0f;
+		else
+			this.dose = dose.floatValue();
 	}
-
-	public void setDosesInteger(Integer doses) {
-		this.doses = doses.intValue();
+	
+	public Float getDosesFloat() {
+		return new Float (dose);
 	}
 	
 	public String getDosesString() {
-		return Integer.toString(doses);
+		return Float.toString(dose);
 	}
 
-	public void setDosesString(String doses) {
-		if(doses==null)
-			throw new IllegalArgumentException("The doses argument is null!");
+	public void setDosesString(String dose) {
+		if(dose==null) {
+		    this.dose = 0f;
+		    return;
+		}
 		try {
-			this.doses = Integer.parseInt(doses);
+			this.dose = Float.parseFloat(dose);
 		} catch (NumberFormatException nfe) {
 			nfe.printStackTrace();
 		}
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == null) {

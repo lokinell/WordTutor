@@ -25,12 +25,12 @@
 					<div style="height: 600px; width: 480px;">
 					  <rich:dataGrid id="recipeGrid"  width="100%"
 						cellspacing="0" styleClass="RecipeGrid"
-						value="#{recipeBean.recipeMedicines}" 
-						var="medicineItem"
+						value="#{recipeBean.currentMedicineInfos}" 
+						var="medicineInfo"
 						rowKeyVar="recipeIndex" columns="2">
 						<h:panelGrid columns="3">
-							<h:outputText value="#{medicineItem.medicine.name}" />
-							<rich:inputNumberSpinner value="#{medicineItem.quantity}"
+							<h:outputText value="#{medicineInfo.medicine.name}" />
+							<rich:inputNumberSpinner value="#{medicineInfo.quantity}"
 								step="5" />
 							<a4j:commandButton value="X" title="从处方上删除该药"
 								action="#{recipeBean.removeMedicineAction}"

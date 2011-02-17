@@ -41,7 +41,6 @@ public class Medicine extends AbstractEntity implements Serializable {
 	private Date buyDate;
 
 	@Column(name = "SHELF_LIFE")
-	//单位是"月"
 	private int shelfLife;
 
 	@OneToOne(mappedBy = "medicine", cascade = { javax.persistence.CascadeType.PERSIST })
@@ -131,9 +130,7 @@ public class Medicine extends AbstractEntity implements Serializable {
 		if ((this.name == null) ? (other.name != null) : !this.name
 				.equals(other.name)) {
 			return false;
-		}
-		
-	    
+		}	    
 		
 		return true;
 	}

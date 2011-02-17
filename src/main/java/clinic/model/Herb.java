@@ -14,6 +14,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="medicine") 
@@ -52,6 +53,9 @@ public class Herb implements Serializable {
 	@Column(name = "SHELF_LIFE")
 	private int shelfLife;
 
+	@Transient
+	transient private Statistic statistic = null;
+	
 	public Long getId() {
 		return id;
 	}
@@ -122,6 +126,24 @@ public class Herb implements Serializable {
 
 	public String getUnit() {
 		return this.unit;
+	}
+
+	public Statistic getStatistic() {
+		return statistic;
+	}
+
+	public void setStatistic(Statistic statistic) {
+		this.statistic = statistic;
+	}
+	
+	/**
+	 * 
+	 * @return 0f means that this herb has never been used.
+	 */
+	public float getMostUsedDose() {
+		if(statistic==null)
+			return 0f;
+		return statistic.getMostUsedDose();
 	}
 
 	@Override

@@ -66,6 +66,7 @@ public class RecipeManager extends AbstractManager {
 				.toString());
 		((MedicineItem) this.recipeMedicines.get(index)).setDisabled(false);
 		this.recipeMedicines.remove(index);
+		this.currentMedicineInfos.remove(index);
 		return null;
 	}
 
@@ -85,6 +86,13 @@ public class RecipeManager extends AbstractManager {
 		MedicineItem item = (MedicineItem) medicineItems.get(index);
 		item.setDisabled(true);
 		this.recipeMedicines.add(item);
+
+		// Add medicine info:
+		MedicineInfo mInfo = new MedicineInfo();
+		mInfo.setMedicine(item.getMedicine());
+		mInfo.setQuantity(10);
+		this.currentMedicineInfos.add(mInfo);
+		
 		return null;
 	}
 

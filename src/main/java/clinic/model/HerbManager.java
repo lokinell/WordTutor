@@ -13,6 +13,8 @@ import javax.persistence.Query;
 import org.recipe.web.controller.AbstractManager;
 import org.recipe.web.controller.ManagerException;
 
+import com.sun.xml.ws.api.security.trust.STSTokenProvider;
+
 @ManagedBean(name = "herbManager")
 @ApplicationScoped
 public class HerbManager extends AbstractManager {
@@ -38,12 +40,50 @@ public class HerbManager extends AbstractManager {
 		} catch (ManagerException e) {
 			e.printStackTrace();
 		}
+		
+		// Do statistics
+		for(Herb herb : herbs)
+			doStatistic(herb);
 
 		return herbs;
 	}
 
 	public void setHerbs(List<Herb> herbs) {
 		this.herbs = herbs;
+	}
+	
+	private class FindDrugs implements PersistenceAction<List<Drug>> {
+		private Herb herb;
+		public FindDrugs(Herb herb) {
+			super();
+			this.herb = herb;
+		}
+		@SuppressWarnings("unchecked")
+		@Override
+		public List<Drug> execute(EntityManager em) {
+			String query = "select m from Drug as m where m.herb = :herb";
+			Query q = em.createQuery(query);
+			q.setParameter("herb", herb);
+			return q.getResultList();
+		}
+		
+	}
+	
+	public void doStatistic(Herb herb) {
+		List<Drug> drugs = null;
+		try {
+			drugs = doInTransaction(new FindDrugs(herb));
+		} catch (ManagerException e) {
+			e.printStackTrace();
+		}
+		if (drugs==null || drugs.isEmpty())
+			return;
+		
+		Statistic statistic = new Statistic();
+		for (Drug drug : drugs) {
+			statistic.count(drug.getDose());
+		}
+		herb.setStatistic(statistic);
 	}
 	
 }

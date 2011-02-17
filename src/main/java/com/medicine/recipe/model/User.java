@@ -7,6 +7,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+/* Yunpeng's comment to test Git Push */
+
 @Entity
 @Table(name="USER")
 @NamedQueries({
