@@ -13,9 +13,8 @@
 	<ui:define name="pageTitle">
 		<h:outputText value="#{i18n['editRecipe.title']}"></h:outputText>
 	</ui:define>
-
 	<ui:define name="content">
-		<h:form id="main">
+		<h:form id="main" prependId="false">
 			<h:panelGrid columns="2" columnClasses="prescribeFirst, prescribeSecond">
 				<rich:panel id="recipePanel" style="width:200px;">
 					<f:facet name="header">
@@ -26,7 +25,6 @@
 					  <rich:dataGrid id="recipeGrid"  width="100%" height="100%"
 						cellspacing="0" styleClass="RecipeGrid"
 						value="#{prescriptionManager.prescription.drugs}" 
-						var="drug"
 						rowKeyVar="recipeIndex" columns="1">
 						<h:panelGrid id ="drug" columns="3" >
 							<h:outputText value="${prescriptionManager.prescription.drugs[recipeIndex].herb.name}" />						  
@@ -40,9 +38,9 @@
 								<a4j:support event="onviewactivated" reRender="recipeGrid" />
 							</rich:inplaceInput>
 							<a4j:commandButton value="x" title="从处方上删除该药"
-								action="#{prescriptionManager.onRemoveDrug}"
-								reRender="recipeGrid,medicineGrid">
-<!--								<a4j:actionparam name="index" value="#{recipeIndex}" />-->
+								action="#{prescriptionManager.onRemoveDrug}" 
+								onclick="javascript:enableRemovedHurb('#{prescriptionManager.herbButtonId[recipeIndex]}')"
+								reRender="recipeGrid">
 								<f:setPropertyActionListener value="#{recipeIndex}" target="#{prescriptionManager.herbIndex}"/>
 							</a4j:commandButton>
 						</h:panelGrid>
@@ -66,8 +64,9 @@
 							rowKeyVar="rowIdx" columns="16" first="0" elements="400">
 							<a4j:commandButton id="herbBtn"
 								value="#{herb.name}"
-								reRender="recipeGrid,herbBtn" 
+								reRender="recipeGrid, herbBtn" 
 								disabled="#{herb.selected}"
+								actionListener="#{prescriptionManager.onAddDrugActionListener}"
 								action="#{prescriptionManager.onAddDrug}">
 								<f:setPropertyActionListener value="#{rowIdx}" target="#{prescriptionManager.herbIndex}"/>
 							</a4j:commandButton>
@@ -79,7 +78,7 @@
 							ajaxKeys="#{prescriptionManager.updates}"
 							rowKeyVar="rowIdx" columns="16" first="400" elements="400">
 							<a4j:commandButton id="herbBtn" value="#{herb.name}"
-								reRender="recipeGrid,herbBtn" 
+								reRender="recipeGrid, herbBtn" 
 								disabled="#{herb.selected}"
 								action="#{prescriptionManager.onAddDrug}">
 								<f:setPropertyActionListener value="#{rowIdx}" target="#{prescriptionManager.herbIndex}"/>

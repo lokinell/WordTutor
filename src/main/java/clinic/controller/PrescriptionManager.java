@@ -1,6 +1,7 @@
 package clinic.controller;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -9,6 +10,9 @@ import java.util.Set;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.persistence.EntityManager;
 
 import clinic.model.Drug;
@@ -83,10 +87,21 @@ public class PrescriptionManager extends AbstractManager {
 		updates.add(new Integer(herbIndex));
 	}
 	
+	private List<String> removeButtons = new ArrayList<String>();
+	public void onAddDrugActionListener(ActionEvent event){
+	    String herbButtonId = event.getComponent().getClientId();
+		System.out.println("herbButtonId="+herbButtonId);
+		removeButtons.add(herbButtonId);
+	}
+	
+	public List<String> getHerbButtonId(){
+		return removeButtons;
+	}
+	
 	public void onRemoveDrug() {
 		Drug drug = prescription.removeDrug(herbIndex);
-		drug.getHerb().setSelected(false);		
-
+		drug.getHerb().setSelected(false);
+		removeButtons.remove(herbIndex);
 		// Specify the row to update
 		// updates.clear();
 		// updates.add(new Integer(herbIndex));
