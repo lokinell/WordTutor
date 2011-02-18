@@ -1,17 +1,14 @@
 package clinic.controller;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
+import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
 import javax.persistence.EntityManager;
 
@@ -21,7 +18,7 @@ import clinic.model.Herb;
 import clinic.model.Prescription;
 
 @ManagedBean(name = "prescriptionManager")
-@ApplicationScoped
+@SessionScoped
 public class PrescriptionManager extends AbstractManager {
 	
 	@ManagedProperty(value="#{herbManager}")

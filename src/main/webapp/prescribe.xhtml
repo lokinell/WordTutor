@@ -80,6 +80,7 @@
 							<a4j:commandButton id="herbBtn" value="#{herb.name}"
 								reRender="recipeGrid, herbBtn" 
 								disabled="#{herb.selected}"
+								actionListener="#{prescriptionManager.onAddDrugActionListener}"
 								action="#{prescriptionManager.onAddDrug}">
 								<f:setPropertyActionListener value="#{rowIdx}" target="#{prescriptionManager.herbIndex}"/>
 							</a4j:commandButton>
