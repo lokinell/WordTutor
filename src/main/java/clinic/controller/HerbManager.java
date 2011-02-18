@@ -1,19 +1,15 @@
-package clinic.model;
+package clinic.controller;
 
 import java.util.List;
 
-import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import org.recipe.web.controller.AbstractManager;
-import org.recipe.web.controller.ManagerException;
-
-import com.sun.xml.ws.api.security.trust.STSTokenProvider;
+import clinic.model.Drug;
+import clinic.model.Herb;
+import clinic.model.Statistic;
 
 @ManagedBean(name = "herbManager")
 @ApplicationScoped

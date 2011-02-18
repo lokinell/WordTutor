@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+<ui:composition>
+
+	<a4j:commandButton value="新建病人信息"
+		onclick="Richfaces.showModalPanel('patientInput');" />
+	<rich:modalPanel id="patientInput" left="300" top="100">
+		<f:facet name="header">
+			<h:outputText value="病人注册" />
+		</f:facet>
+		<h:form>
+			<h:panelGrid columns="2">
+				<h:outputText value="姓名" />
+				<h:inputText value="#{patientBean.currentPatient.name}"
+					required="true" />
+				<h:outputText value="年龄" />
+				<h:inputText id="age" value="#{patientBean.currentPatient.age}"
+					required="true">
+					<f:convertNumber for="age" minIntegerDigits="0"
+						maxFractionDigits="100" />
+				</h:inputText>
+				<h:outputText value="性别" />
+				<h:selectOneListbox value="#{patientBean.currentPatient.gender}"
+					size="1">
+					<f:selectItem itemLabel="男" itemValue="MALE" />
+					<f:selectItem itemLabel="女" itemValue="FEMALE" />
+				</h:selectOneListbox>
+				<h:outputText value="电话" />
+				<h:inputText value="#{patientBean.currentPatient.phone}" />
+				<h:outputText value="住址" />
+				<h:inputText value="#{patientBean.currentPatient.address}" />
+				<a4j:commandButton value="注册"
+					actionListener="#{patientBean.registerActionListener}"
+					onclick="Richfaces.hideModalPanel('patientInput');"
+					reRender="patientList" />
+				<h:commandButton onclick="Richfaces.hideModalPanel('patientInput');"
+					value="取消" />
+			</h:panelGrid>
+		</h:form>
+	</rich:modalPanel>
+</ui:composition>
+</html>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+<ui:composition>
+
+	<rich:extendedDataTable rowKeyVar="rkv" height="600px" width="300px"
+		id="patientList" rows="40" selectionMode="single"
+		selection="#{patientBean.selection}" value="#{patientBean.patients}"
+		var="patient" sortMode="single">
+		<a4j:support event="onselectionchange"
+			actionListener="#{patientBean.takeSelection}"
+			reRender="toolbar, recipeGrid, recipeDetial">
+		</a4j:support>
+		<rich:column id="name" sortable="true" sortBy="#{patient.name}"
+			filterBy="#{patient.name}" filterEvent="onkeyup">
+			<f:facet name="header">
+				<h:outputText styleClass="headerText" value="姓名" />
+			</f:facet>
+			<h:outputText value="#{patient.name}" />
+		</rich:column>
+		<rich:column id="age">
+			<f:facet name="header">
+				<h:outputText styleClass="headerText" value="年龄" />
+			</f:facet>
+			<h:outputText value="#{patient.age}" />
+		</rich:column>
+		<rich:column id="status" sortable="true" sortBy="#{patient.status}">
+			<f:facet name="header">
+				<h:outputText styleClass="headerText" value="看病状态" />
+			</f:facet>
+			<h:outputText value="#{patient.status}" />
+		</rich:column>
+	</rich:extendedDataTable>
+</ui:composition>
+</html>

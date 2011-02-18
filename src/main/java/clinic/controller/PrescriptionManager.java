@@ -1,23 +1,19 @@
-package clinic.model;
+package clinic.controller;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 
-import org.recipe.web.controller.AbstractManager;
-import org.recipe.web.controller.ManagerException;
-
+import clinic.model.Drug;
+import clinic.model.DrugFace;
+import clinic.model.Herb;
 import clinic.model.Prescription;
 
 @ManagedBean(name = "prescriptionManager")
