@@ -20,19 +20,19 @@ import clinic.model.Prescription;
 @ManagedBean(name = "prescriptionManager")
 @SessionScoped
 public class PrescriptionManager extends AbstractManager {
-	
-	@ManagedProperty(value="#{herbManager}")
+
+	@ManagedProperty(value = "#{herbManager}")
 	private HerbManager herbManager;
 
 	// The prescription being edited;
-	private Prescription prescription = new Prescription();	
+	private Prescription prescription = new Prescription();
 
 	private int herbIndex;
-	
+
+	private Herb filterHerb;
+
 	private Set<Integer> updates = new HashSet<Integer>();
-	
-	private String filter = ""; 
-	
+
 	public PrescriptionManager() {
 		super();
 	}
@@ -52,7 +52,7 @@ public class PrescriptionManager extends AbstractManager {
 	public void setHerbManager(HerbManager herbManager) {
 		this.herbManager = herbManager;
 	}
-	
+
 	public Prescription getPrescription() {
 		return prescription;
 	}
@@ -60,7 +60,7 @@ public class PrescriptionManager extends AbstractManager {
 	public void setPrescription(Prescription prescription) {
 		this.prescription = prescription;
 	}
-	
+
 	public Set<Integer> getUpdates() {
 		return updates;
 	}
@@ -69,55 +69,65 @@ public class PrescriptionManager extends AbstractManager {
 		this.updates = updates;
 	}
 
-	public String getFilter() {
-		return filter;
-	}
-
-	public void setFilter(String filter) {
-		this.filter = filter;
-	}
-
 	public List<Herb> suggest(Object filter) {
 		List<Herb> filteds = new ArrayList<Herb>();
-		String FILTER = ((String)filter).toUpperCase();
-		if(FILTER.length()>0) {
+		String FILTER = ((String) filter).toUpperCase();
+		if (FILTER.length() > 0) {
 			for (Herb herb : herbManager.getHerbs()) {
-				if (herb.getAlias().startsWith(FILTER))
+				if (herb.getAlias().startsWith(FILTER) && !herb.isSelected())
 					filteds.add(herb);
 			}
 		}
 		return filteds;
 	}
-	
+
 	public void unselectAll() {
-		for (Herb herb: herbManager.getHerbs()) {
-			herb.setSelected(false);				
+		for (Herb herb : herbManager.getHerbs()) {
+			herb.setSelected(false);
+		}
+	}
+
+	public void onAddDrugFromFilter() {
+		if (this.filterHerb != null && !this.filterHerb.isSelected()) {
+			this.filterHerb.setSelected(true);
+			Drug drug = new Drug(this.filterHerb);
+			prescription.addDrug(drug);
+
+			// add herb button client id
+			StringBuilder builder = new StringBuilder("herbGrid");
+			int idx = herbManager.getHerbs().indexOf(this.filterHerb);
+			builder.append(idx / 400 + 1);// tab id
+			builder.append(":");
+			builder.append(idx);
+			builder.append(":herbBtn");
+			removeButtons.add(builder.toString());
 		}
 	}
 
 	public void onAddDrug() {
 		Herb herb = herbManager.getHerbs().get(herbIndex);
-		herb.setSelected(true);
-		Drug drug = new Drug(herb);
-		prescription.addDrug(drug);
-		
-		// Specify the row to update
-		updates.clear();
-		updates.add(new Integer(herbIndex));
+		if (!herb.isSelected()) {
+			herb.setSelected(true);
+			Drug drug = new Drug(herb);
+			prescription.addDrug(drug);
+
+			// Specify the row to update
+			updates.clear();
+			updates.add(new Integer(herbIndex));
+		}
 	}
-	
+
 	private List<String> removeButtons = new ArrayList<String>();
-	
-	public void onAddDrugActionListener(ActionEvent event){
-	    String herbButtonId = event.getComponent().getClientId();
-		System.out.println("herbButtonId="+herbButtonId);
+
+	public void onAddDrugActionListener(ActionEvent event) {
+		String herbButtonId = event.getComponent().getClientId();
 		removeButtons.add(herbButtonId);
 	}
-	
-	public List<String> getHerbButtonId(){
+
+	public List<String> getHerbButtonId() {
 		return removeButtons;
 	}
-	
+
 	public void onRemoveDrug() {
 		Drug drug = prescription.removeDrug(herbIndex);
 		drug.getHerb().setSelected(false);
@@ -135,11 +145,17 @@ public class PrescriptionManager extends AbstractManager {
 		}
 		return wrappers;
 	}
-	
+
 	public void onClear() {
+		List<Drug>	drugs = prescription.getDrugs();
+		for (Drug drug : drugs) {
+			drug.getHerb().setSelected(false);
+		}
 		
+		drugs.clear();
+		removeButtons.clear();
 	}
-	
+
 	public void onSave() {
 		try {
 			doInTransaction(new PersistenceActionWithoutResult() {
@@ -151,10 +167,18 @@ public class PrescriptionManager extends AbstractManager {
 			});
 		} catch (ManagerException e) {
 			e.printStackTrace();
-		}		
+		}
 	}
-		
+
 	public void onReturn() {
-		
+
+	}
+
+	public void setFilterHerb(Herb filterHerb) {
+		this.filterHerb = filterHerb;
+	}
+
+	public Herb getFilterHerb() {
+		return filterHerb;
 	}
 }

@@ -5,8 +5,20 @@ function enableRemovedHurb(clientId) {
 	hurbButton.setAttribute("onclick", clickEvent);
 }
 
+function addSuggestionObject(sgcomponent){
+	var herbBtnObjs = jQuery(".prescribeSecond :input");
+	var herb = sgcomponent.oldValue;
+	for(var i=0; i<herbBtnObjs.length; i++){
+		if(herbBtnObjs[i].value === herb){
+			herbBtnObjs[i].disabled="true";
+			break;
+		}
+	}
+	$('filter').value="";
+}
+
 function printPartOfDocument() {
-	this.init.apply(this, arguments)
+	this.init.apply(this, arguments);
 }
 printPartOfDocument.prototype = {
 	init : function(o, part) {
@@ -16,7 +28,7 @@ printPartOfDocument.prototype = {
 		this.printCss = '';
 		var _this = this;
 		this.addEvent(this.o, 'click', function() {
-			_this.create()
+			_this.create();
 		});
 	},
 	create : function() {

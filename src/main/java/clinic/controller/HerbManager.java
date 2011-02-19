@@ -2,8 +2,8 @@ package clinic.controller;
 
 import java.util.List;
 
-import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
@@ -12,7 +12,7 @@ import clinic.model.Herb;
 import clinic.model.Statistic;
 
 @ManagedBean(name = "herbManager")
-@ApplicationScoped
+@SessionScoped
 public class HerbManager extends AbstractManager {
 	private List<Herb> herbs;
 	

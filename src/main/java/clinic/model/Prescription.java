@@ -22,7 +22,7 @@ public class Prescription extends AbstractEntity {
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date creation;
-    
+	
 	public List<Drug> getDrugs() {
 		return drugs;
 	}
@@ -46,11 +46,12 @@ public class Prescription extends AbstractEntity {
 	
 	public Drug removeDrug(int index) {
 		Drug drug = drugs.remove(index);
-		if (drug!=null)
+		if (drug!=null){
 			drug.setPrescription(null);
+		}
 		return drug;
 	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == null) {
