@@ -16,44 +16,44 @@
 		</f:facet>
 		<table id="recipeConten">
 			<tr>
-				<td align="center" colspan="6">×××中医院</td>
+				<td align="center" colspan="6">山东×××中医院</td>
 			</tr>
 			<tr>
 				<td align="center" colspan="6">门诊处方</td>
 			</tr>
 			<tr>
-				<td>费别：</td>
+				<td>【费    别】</td>
 				<td><h:outputText value="#{recipeBean.selectedRecipe.feeType}" /></td>
-				<td>处方编号：</td>
+				<td>【处方编号】</td>
 				<td colspan="3" align="center"><h:outputText value="#{recipeBean.selectedRecipe.id}" /></td>
 			</tr>
 			<tr>
-				<td>科室：</td>
-				<td colspan="2">肺病科</td>
+				<td>【科    室】</td>
+				<td colspan="2">内科</td>
 				<td colspan="3" align="center"><h:outputText value="#{recipeBean.selectedRecipe.department}" /></td>
 			</tr>
 			<tr>
-				<td rowspan="2">姓名：</td>
+				<td rowspan="2">【姓名】</td>
 				<td rowspan="2"><h:outputText value="#{patientBean.currentPatient.name}" /></td>
-				<td>性别：</td>
+				<td>【性    别】</td>
 				<td><h:outputText value="#{patientBean.currentPatient.gender}" /></td>
-				<td>年龄：</td>
+				<td>【年    龄】</td>
 				<td><h:outputText value="#{patientBean.currentPatient.age}" /></td>
 			</tr>
 			<tr>
-				<td>门诊病历号：</td>
+				<td>【门诊病历号】</td>
 				<td colspan="3" align="center"><h:outputText value="#{patientBean.currentPatient.cardID}" /></td>
 			</tr>
 			<tr>
-				<td colspan="3">单位或家庭住址</td>
+				<td colspan="3">【单位或家庭住址】</td>
 				<td colspan="3" align="center"><h:outputText value="#{patientBean.currentPatient.address}" /></td>
 			</tr>
 			<tr>
-				<td colspan="3">临床诊断及证型</td>
+				<td colspan="3">【临床诊断及证型】</td>
 				<td colspan="3" align="center"><h:outputText value="#{recipeBean.selectedRecipe.disease}" /></td>
 			</tr>
 			<tr>
-				<td colspan="6" height="200px;" valign="top"><span>RP：</span> <rich:dataGrid
+				<td colspan="6" height="200px;" valign="top"><span>【RP】</span> <rich:dataGrid
 					id="recipeDetial" value="#{recipeBean.currentMedicineInfos}"
 					columns="2" var="medicineInfo" rowKeyVar="mIndex">
 					<h:panelGrid columns="2">
@@ -63,27 +63,28 @@
 				</rich:dataGrid></td>
 			</tr>
 			<tr>
-				<td>医 师</td>
+				<td>【医    师】</td>
 				<td colspan="2">王××</td>
-				<td>药品金额<br />
-				及收讫章</td>
+				<td>【药品金额】<br />
+				【收 讫 章】</td>
 				<td colspan="2">37.5</td>
 			</tr>
 			<tr>
-				<td>审核</td>
+				<td>【审    核】</td>
 				<td>刘××</td>
-				<td>调配</td>
+				<td>【调    配】</td>
 				<td>李××</td>
-				<td>发药</td>
+				<td>【发    药】</td>
 				<td>赵××</td>
 			</tr>
 			<tr>
+				<td>【备注】</td>
 				<td colspan="6" rowspan="3">
-				<ul>
-					<li>注：1. 本处方2日内有效</li>
-					<li>2.取药时请您当面核对药品名称、规格、数量</li>
-					<li>3．延长处方用量时间原因：慢性病 老年病 外地 其他</li>
-				</ul>
+				<ol>
+					<li>本处方2日内有效</li>
+					<li>取药时请您当面核对药品名称、规格、数量</li>
+					<li>延长处方用量时间原因：慢性病 老年病 外地 其他</li>
+				</ol>
 				</td>
 			</tr>
 		</table>
