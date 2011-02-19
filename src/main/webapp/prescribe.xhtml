@@ -37,15 +37,23 @@
 								value="#{prescriptionManager.drugs[recipeIndex].dose}">
 								<a4j:support event="onviewactivated" reRender="recipeGrid" />
 							</rich:inplaceInput>
-							<a4j:commandButton value="x" title="从处方上删除该药"
+							<a4j:commandButton value="x" title="从处方上删除#{prescriptionManager.prescription.drugs[recipeIndex].herb.name}"
 								action="#{prescriptionManager.onRemoveDrug}" 
 								onclick="javascript:enableRemovedHurb('#{prescriptionManager.herbButtonId[recipeIndex]}')"
 								reRender="recipeGrid">
 								<f:setPropertyActionListener value="#{recipeIndex}" target="#{prescriptionManager.herbIndex}"/>
 							</a4j:commandButton>
 						</h:panelGrid>
-					   </rich:dataGrid>
-					</div>
+					   </rich:dataGrid> 
+					 	<h:inputText value="#{prescriptionManager.filter}" id="filter" 
+					 	width="150px" required="true" />
+						<rich:suggestionbox id="suggestionBoxId"
+							for="filter" suggestionAction="#{prescriptionManager.suggest}"
+							var="herb" nothingLabel="No herb found">
+						<h:column>
+							<h:outputText value="#{herb.name}" />
+						</h:column>
+						</rich:suggestionbox></div>
 
 					<div align="center">
 					<h:commandButton value="保存"
@@ -87,8 +95,7 @@
 						</rich:dataGrid>
 					</rich:tab>
 				</rich:tabPanel>
-
-			</h:panelGrid>
+			</h:panelGrid>			
 		</h:form>
 	</ui:define>
 </ui:composition>

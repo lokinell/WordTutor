@@ -31,6 +31,8 @@ public class PrescriptionManager extends AbstractManager {
 	
 	private Set<Integer> updates = new HashSet<Integer>();
 	
+	private String filter = ""; 
+	
 	public PrescriptionManager() {
 		super();
 	}
@@ -67,6 +69,26 @@ public class PrescriptionManager extends AbstractManager {
 		this.updates = updates;
 	}
 
+	public String getFilter() {
+		return filter;
+	}
+
+	public void setFilter(String filter) {
+		this.filter = filter;
+	}
+
+	public List<Herb> suggest(Object filter) {
+		List<Herb> filteds = new ArrayList<Herb>();
+		String FILTER = ((String)filter).toUpperCase();
+		if(FILTER.length()>0) {
+			for (Herb herb : herbManager.getHerbs()) {
+				if (herb.getAlias().startsWith(FILTER))
+					filteds.add(herb);
+			}
+		}
+		return filteds;
+	}
+	
 	public void unselectAll() {
 		for (Herb herb: herbManager.getHerbs()) {
 			herb.setSelected(false);				
@@ -85,6 +107,7 @@ public class PrescriptionManager extends AbstractManager {
 	}
 	
 	private List<String> removeButtons = new ArrayList<String>();
+	
 	public void onAddDrugActionListener(ActionEvent event){
 	    String herbButtonId = event.getComponent().getClientId();
 		System.out.println("herbButtonId="+herbButtonId);
