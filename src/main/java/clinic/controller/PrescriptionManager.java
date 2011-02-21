@@ -30,6 +30,8 @@ public class PrescriptionManager extends AbstractManager {
 	private int herbIndex;
 
 	private Herb filterHerb;
+	
+	private String filter = "请输入要添加的药";
 
 	private Set<Integer> updates = new HashSet<Integer>();
 
@@ -101,6 +103,8 @@ public class PrescriptionManager extends AbstractManager {
 			builder.append(idx);
 			builder.append(":herbBtn");
 			removeButtons.add(builder.toString());
+			
+			this.filterHerb = null;
 		}
 	}
 
@@ -180,5 +184,13 @@ public class PrescriptionManager extends AbstractManager {
 
 	public Herb getFilterHerb() {
 		return filterHerb;
+	}
+
+	public void setFilter(String filter) {
+		this.filter = filter;
+	}
+
+	public String getFilter() {
+		return filter;
 	}
 }

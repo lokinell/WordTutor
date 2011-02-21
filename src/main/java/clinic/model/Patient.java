@@ -1,20 +1,16 @@
 package clinic.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 
 
 /**
- * Created by IntelliJ IDEA. User: Administrator Date: 2010-12-30 Time: 22:35:41
- * To change this template use File | Settings | File Templates.
+ * 病人基本信息
  */
 @Entity
 @NamedQuery(name="Patient.all", query="select p from Patient as p order by p.name")
@@ -25,8 +21,7 @@ public class Patient extends AbstractEntity implements Serializable {
     private String name;
     // 年龄
     private int age;
-    @OneToMany(mappedBy = "patient", cascade = CascadeType.PERSIST)
-    private Collection<Prescription> recipes;
+    
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "GENDER")
     private Sex gender;
@@ -37,7 +32,7 @@ public class Patient extends AbstractEntity implements Serializable {
     // 医保卡号
     private String cardID;
 
-    // 就诊的状态	// 0:挂号�?1：开好处方， 2�?抓好�?
+    // 就诊的状态      0:挂号 1：开好处方  2:抓好药
     public int getStatus() {
         return status;
     }
@@ -96,14 +91,6 @@ public class Patient extends AbstractEntity implements Serializable {
 
     public void setCardID(String cardID) {
         this.cardID = cardID;
-    }
-
-    public void setRecipes(Collection<Prescription> recipes) {
-        this.recipes = recipes;
-    }
-
-    public Collection<Prescription> getRecipes() {
-        return recipes;
     }
 
     @Override

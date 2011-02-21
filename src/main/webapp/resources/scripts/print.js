@@ -1,20 +1,43 @@
 function enableRemovedHurb(clientId) {
-	var hurbButton = document.getElementById(clientId);
-	hurbButton.disabled = false;
-	var clickEvent ="A4J.AJAX.Submit('main',event,{'similarityGroupingId':'"+clientId+"','parameters':{'"+clientId+"':'"+clientId+"'} } );return false;";
-	hurbButton.setAttribute("onclick", clickEvent);
+	var herbBtn = document.getElementById(clientId);
+	if (herbBtn) {
+		herbBtn.disabled = false;
+		var clickEvent = "A4J.AJAX.Submit('main',event,{'similarityGroupingId':'"
+				+ clientId
+				+ "','parameters':{'"
+				+ clientId
+				+ "':'"
+				+ clientId
+				+ "'} } );return false;";
+		herbBtn.setAttribute("onclick", clickEvent);
+	}
 }
 
-function addSuggestionObject(sgcomponent){
-	var herbBtnObjs = jQuery(".prescribeSecond :input");
-	var herb = sgcomponent.oldValue;
-	for(var i=0; i<herbBtnObjs.length; i++){
-		if(herbBtnObjs[i].value === herb){
-			herbBtnObjs[i].disabled="true";
-			break;
+function addSuggestionObject(sgcomponent) {
+	var filterValue = $('filter').value;
+	if (filterValue != "请输入要添加的药") {
+		var herbBtnObjs = jQuery(".prescribeSecond :input");
+		var herb = sgcomponent.oldValue;
+		for ( var i = 0; i < herbBtnObjs.length; i++) {
+			if (herbBtnObjs[i].value === herb) {
+				herbBtnObjs[i].disabled = "true";
+				break;
+			}
 		}
+		$('filter').value = "请输入要添加的药";
+		sgcomponent.oldValue = "";
 	}
-	$('filter').value="";
+}
+
+function handleKeyPress(e, sg) {
+	event.preventDefault();
+	var key = e.keyCode || e.which;
+	if (key == 13) {
+		addSuggestionObject(sg);
+		return false;
+	}else{
+		return false;
+	}
 }
 
 function printPartOfDocument() {
