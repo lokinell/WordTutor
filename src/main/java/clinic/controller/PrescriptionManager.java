@@ -121,7 +121,13 @@ public class PrescriptionManager extends AbstractManager {
 			updates.add(new Integer(herbIndex));
 		}
 	}
+	
+	
+	public int getPrescriptDrugsIndex(){
+		return prescription.getDrugs().size()-1;
+	}
 
+	
 	public void onRemoveDrug() {
 		Drug drug = prescription.removeDrug(herbIndex);
 		drug.getHerb().setSelected(false);

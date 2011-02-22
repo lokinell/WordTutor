@@ -26,7 +26,7 @@ public class Drug extends AbstractEntity {
 	private Herb herb;
 	
 	@Column(name="dose")
-	private float dose = 0F;
+	private float dose = 5F;
 
 	public Drug() {
 		super();

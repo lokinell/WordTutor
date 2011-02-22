@@ -17,7 +17,7 @@
 		<h:form id="main" prependId="false">
 			<h:panelGrid columns="2"
 				columnClasses="prescribeFirst, prescribeSecond">
-				<rich:panel id="recipePanel" style="width:200px;">
+				<rich:panel id="recipePanel" style="width:250px;">
 					<f:facet name="header">
 						<h:outputText value="中药处方" />
 					</f:facet>
@@ -26,21 +26,13 @@
 						value="#{prescriptionManager.prescription.drugs}"
 						rowKeyVar="recipeIndex" columns="1">
 						<h:panelGrid id="drug" columns="3">
-							<h:outputText
+							<h:outputText 
 								value="${prescriptionManager.prescription.drugs[recipeIndex].herb.name}" />
-							<rich:inplaceSelect
-								value="#{prescriptionManager.drugs[recipeIndex].dose}"
-								rendered="${prescriptionManager.drugs[recipeIndex].toSelect}">
-								<f:selectItems
-									value="${prescriptionManager.drugs[recipeIndex].doses}" />
-								<a4j:support event="onviewactivated" reRender="recipeGrid" />
-							</rich:inplaceSelect>
-							<rich:inplaceInput
-								rendered="${prescriptionManager.drugs[recipeIndex].toEdit}"
-								value="#{prescriptionManager.drugs[recipeIndex].dose}"
-								defaultLabel="">
-								<a4j:support event="onviewactivated" reRender="recipeGrid" />
-							</rich:inplaceInput>
+							<h:inputText id="doseInput" value="#{prescriptionManager.drugs[recipeIndex].dose}"
+							     size="4" onkeyup="value=value.replace(/[^\d.]/g, '')"
+								 onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d.]/g,'')) ">
+                                <f:validateDoubleRange minimum="1" maximum="100" />
+                            </h:inputText>
 							<a4j:commandButton value="x"
 								title="从处方上删除【#{prescriptionManager.prescription.drugs[recipeIndex].herb.name}】"
 								action="#{prescriptionManager.onRemoveDrug}"
@@ -50,12 +42,13 @@
 							</a4j:commandButton>
 						</h:panelGrid>
 					</rich:dataGrid>
-					<div><h:inputText id="filter" width="150px"
+					<div align="center">
+					<h:inputText id="filter" width="200px"
 						value="#{prescriptionManager.filter}">
 					</h:inputText> 
 					<rich:suggestionbox id="suggestionBoxId" for="filter"
 						suggestionAction="#{prescriptionManager.suggest}" var="herb"
-						minChars="2" status="none" nothingLabel="没找到匹配的药" 
+						minChars="2" status="none" nothingLabel="没找到匹配的药"
 						fetchValue="#{herb.name}">
 						<h:column>
 							<h:outputText value="#{herb.name}-(#{herb.alias})" />
@@ -66,7 +59,7 @@
 						<a4j:support ajaxSingle="true" event="onselect"
 							action="#{prescriptionManager.onAddSelectedHerb}"
 							reRender="recipeGrid,herbBtn,filter,suggestionBoxId"
-							focus="filter">
+							oncomplete="focusNewHerb(#{prescriptionManager.prescriptDrugsIndex})">
 							<f:setPropertyActionListener value="#{herb}"
 								target="#{prescriptionManager.filterHerb}" />
 						</a4j:support>
@@ -89,6 +82,7 @@
 							columns="16" first="0" elements="400">
 							<a4j:commandButton id="herbBtn" value="#{herb.name}"
 								reRender="recipeGrid,herbBtn" disabled="#{herb.selected}"
+								oncomplete="focusNewHerb(#{prescriptionManager.prescriptDrugsIndex})"
 								action="#{prescriptionManager.onAddDrug}">
 								<f:setPropertyActionListener value="#{rowIdx}"
 									target="#{prescriptionManager.herbIndex}" />
@@ -102,7 +96,8 @@
 							columns="16" first="400" elements="400">
 							<a4j:commandButton id="herbBtn2" value="#{herb.name}"
 								reRender="recipeGrid,herbBtn2" disabled="#{herb.selected}"
-								action="#{prescriptionManager.onAddDrug}">
+								action="#{prescriptionManager.onAddDrug}"
+								oncomplete="focusNewHerb(#{prescriptionManager.prescriptDrugsIndex})">
 								<f:setPropertyActionListener value="#{rowIdx}"
 									target="#{prescriptionManager.herbIndex}" />
 							</a4j:commandButton>

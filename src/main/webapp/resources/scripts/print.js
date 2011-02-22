@@ -1,3 +1,7 @@
+function focusNewHerb(index){
+	$('recipeGrid:'+index+':doseInput').focus();
+}
+
 function printPartOfDocument() {
 	this.init.apply(this, arguments);
 }
