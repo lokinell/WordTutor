@@ -21,9 +21,8 @@
 					<f:facet name="header">
 						<h:outputText value="中药处方" />
 					</f:facet>
-					<rich:dataGrid
-						id="recipeGrid" width="100%" height="100%" cellspacing="0"
-						styleClass="RecipeGrid"
+					<rich:dataGrid id="recipeGrid" width="100%" height="100%"
+						cellspacing="0" styleClass="RecipeGrid"
 						value="#{prescriptionManager.prescription.drugs}"
 						rowKeyVar="recipeIndex" columns="1">
 						<h:panelGrid id="drug" columns="3">
@@ -45,35 +44,33 @@
 							<a4j:commandButton value="x"
 								title="从处方上删除【#{prescriptionManager.prescription.drugs[recipeIndex].herb.name}】"
 								action="#{prescriptionManager.onRemoveDrug}"
-								reRender="recipeGrid,herbBtn">
+								reRender="recipeGrid,herbBtn,herbBtn2">
 								<f:setPropertyActionListener value="#{recipeIndex}"
 									target="#{prescriptionManager.herbIndex}" />
 							</a4j:commandButton>
 						</h:panelGrid>
 					</rich:dataGrid>
-					<div><h:inputText id="filter" width="150px" onclick="if(this.value='请输入要添加的药') this.value=''"
-						 value="#{prescriptionManager.filter}"> 
-						 </h:inputText>
-					    <rich:suggestionbox
-							id="suggestionBoxId" for="filter"
-							suggestionAction="#{prescriptionManager.suggest}" var="herb"
-							status="none" 
-							nothingLabel="没找到匹配的药" fetchValue="#{herb.name}">
-							<h:column>
-								<h:outputText value="#{herb.name}-(#{herb.alias})" />
-							</h:column>
-							<h:column>
-								<h:outputText value="#{herb.quantity}#{herb.unit}" />
-							</h:column>
-							<a4j:support ajaxSingle="true" event="onselect"
-								action="#{prescriptionManager.onAddSelectedHerb}"
-								reRender="recipeGrid,herbBtn,filter,suggestionBoxId"
-								focus="filter">
-								<f:setPropertyActionListener value="#{herb}"
-									target="#{prescriptionManager.filterHerb}" />
-							</a4j:support>
-						</rich:suggestionbox>
-						</div>
+					<div><h:inputText id="filter" width="150px"
+						value="#{prescriptionManager.filter}">
+					</h:inputText> 
+					<rich:suggestionbox id="suggestionBoxId" for="filter"
+						suggestionAction="#{prescriptionManager.suggest}" var="herb"
+						minChars="2" status="none" nothingLabel="没找到匹配的药" 
+						fetchValue="#{herb.name}">
+						<h:column>
+							<h:outputText value="#{herb.name}-(#{herb.alias})" />
+						</h:column>
+						<h:column>
+							<h:outputText value="#{herb.quantity}#{herb.unit}" />
+						</h:column>
+						<a4j:support ajaxSingle="true" event="onselect"
+							action="#{prescriptionManager.onAddSelectedHerb}"
+							reRender="recipeGrid,herbBtn,filter,suggestionBoxId"
+							focus="filter">
+							<f:setPropertyActionListener value="#{herb}"
+								target="#{prescriptionManager.filterHerb}" />
+						</a4j:support>
+					</rich:suggestionbox></div>
 
 					<div align="center"><h:commandButton value="保存"
 						action="#{prescriptionManager.onSave}" /> <h:outputText
@@ -81,8 +78,7 @@
 						action="#{prescriptionManager.onClear}"
 						reRender="recipeGrid,medicineGrid" /> <h:outputText value="  " />
 					<h:commandButton value="返回"
-						action="#{prescriptionManager.onReturn}" />
-				   </div>
+						action="#{prescriptionManager.onReturn}" /></div>
 				</rich:panel>
 
 				<rich:tabPanel id="medicineGrid" switchType="ajax">
@@ -104,8 +100,8 @@
 							columnClasses="MedicineColumnClass" var="herb"
 							ajaxKeys="#{prescriptionManager.updates}" rowKeyVar="rowIdx"
 							columns="16" first="400" elements="400">
-							<a4j:commandButton id="herbBtn" value="#{herb.name}"
-								reRender="recipeGrid,herbBtn" disabled="#{herb.selected}"
+							<a4j:commandButton id="herbBtn2" value="#{herb.name}"
+								reRender="recipeGrid,herbBtn2" disabled="#{herb.selected}"
 								action="#{prescriptionManager.onAddDrug}">
 								<f:setPropertyActionListener value="#{rowIdx}"
 									target="#{prescriptionManager.herbIndex}" />

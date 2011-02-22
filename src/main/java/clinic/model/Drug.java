@@ -2,6 +2,8 @@ package clinic.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -22,7 +24,7 @@ public class Drug extends AbstractEntity {
 	@ManyToOne
 	@JoinColumn(name="herb")
 	private Herb herb;
-
+	
 	@Column(name="dose")
 	private float dose = 0F;
 
