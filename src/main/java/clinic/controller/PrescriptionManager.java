@@ -27,12 +27,16 @@ public class PrescriptionManager extends AbstractManager {
 	// The prescription being edited;
 	private Prescription prescription = new Prescription();
 
+	// The index of the selected herb 
 	private int herbIndex;
 
+	// The selected herb
 	private Herb filterHerb;
 	
-	private String filter = "请输入要添加的药";
+	// The filter entered by users
+	private String filter = "";
 
+	// The list of the buttons to be updated
 	private Set<Integer> updates = new HashSet<Integer>();
 
 	public PrescriptionManager() {
@@ -88,24 +92,22 @@ public class PrescriptionManager extends AbstractManager {
 			herb.setSelected(false);
 		}
 	}
+	
+	public void onAddSelectedHerb() {
 
-	public void onAddDrugFromFilter() {
 		if (this.filterHerb != null && !this.filterHerb.isSelected()) {
 			this.filterHerb.setSelected(true);
 			Drug drug = new Drug(this.filterHerb);
 			prescription.addDrug(drug);
-
-			// add herb button client id
-			StringBuilder builder = new StringBuilder("herbGrid");
-			int idx = herbManager.getHerbs().indexOf(this.filterHerb);
-			builder.append(idx / 400 + 1);// tab id
-			builder.append(":");
-			builder.append(idx);
-			builder.append(":herbBtn");
-			removeButtons.add(builder.toString());
+			
+			// Specify the row to update
+			int index = herbManager.getHerbs().indexOf(this.filterHerb);
+			updates.clear();
+			updates.add(new Integer(index));
 			
 			this.filterHerb = null;
-		}
+			this.filter = null;
+		}		
 	}
 
 	public void onAddDrug() {
@@ -121,24 +123,15 @@ public class PrescriptionManager extends AbstractManager {
 		}
 	}
 
-	private List<String> removeButtons = new ArrayList<String>();
-
-	public void onAddDrugActionListener(ActionEvent event) {
-		String herbButtonId = event.getComponent().getClientId();
-		removeButtons.add(herbButtonId);
-	}
-
-	public List<String> getHerbButtonId() {
-		return removeButtons;
-	}
-
 	public void onRemoveDrug() {
 		Drug drug = prescription.removeDrug(herbIndex);
 		drug.getHerb().setSelected(false);
-		removeButtons.remove(herbIndex);
+		// removeButtons.remove(herbIndex);
 		// Specify the row to update
-		// updates.clear();
-		// updates.add(new Integer(herbIndex));
+		int index = herbManager.getHerbs().indexOf(drug.getHerb());
+		updates.clear();
+		updates.add(new Integer(index));
+
 	}
 
 	public List<DrugFace> getDrugs() {
@@ -157,7 +150,6 @@ public class PrescriptionManager extends AbstractManager {
 		}
 		
 		drugs.clear();
-		removeButtons.clear();
 	}
 
 	public void onSave() {
