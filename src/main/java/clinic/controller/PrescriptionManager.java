@@ -108,7 +108,7 @@ public class PrescriptionManager extends AbstractManager {
 			this.filter = null;
 		}		
 	}
-
+	
 	public void onAddDrug() {
 		Herb herb = herbManager.getHerbs().get(herbIndex);
 		if (!herb.isSelected()) {
@@ -169,6 +169,13 @@ public class PrescriptionManager extends AbstractManager {
 		} catch (ManagerException e) {
 			e.printStackTrace();
 		}
+		
+		
+		List<Drug> drugs = prescription.getDrugs();
+		for (Drug drug : drugs) {
+			herbManager.doStatistic(drug.getHerb());
+		}
+		
 	}
 
 	public void onReturn() {

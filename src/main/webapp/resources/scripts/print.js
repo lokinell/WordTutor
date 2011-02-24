@@ -1,5 +1,5 @@
 function focusNewHerb(index){
-	$('recipeGrid:'+index+':doseInput').focus();
+	$('recipeGrid:'+index+':doseInputcomboboxField').focus();
 }
 
 function printPartOfDocument() {

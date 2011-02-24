@@ -23,9 +23,6 @@ public class Prescription extends AbstractEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date creation;
 	
-	// 处方注解
-	private String comment;
-	
 	public List<Drug> getDrugs() {
 		return drugs;
 	}
@@ -83,13 +80,4 @@ public class Prescription extends AbstractEntity {
 		String date = creation != null ? creation.toString() : "unknown";
 		return "Prescription[create date: " + date +"]";
 	}
-
-	public void setComment(String comment) {
-		this.comment = comment;
-	}
-
-	public String getComment() {
-		return comment;
-	}
-
 }

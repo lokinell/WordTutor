@@ -28,6 +28,31 @@ public class DrugFace {
 	public boolean isToSelect() {
 		return drug.getDose() != 0F;
 	}
+	
+	public List<String> suggestDoses(Object filter){
+		List<String> doses = new ArrayList<String>();
+		Statistic statistic = drug.getHerb().getStatistic();	
+		boolean used = false;
+		DecimalFormat format = new DecimalFormat();
+		if (statistic != null) {
+			List<Frequence> frequences = statistic.getFrequencies();
+			for (Frequence frequence: frequences) {
+				String label = format.format(frequence.getDose());
+				doses.add(label);
+				if(drug.getDose()==frequence.getDose())
+					used = true;
+			}
+		}
+		
+		// Add the dose of the current drug if it is new:
+		if (!used && drug.getDose()!=0F) {
+			String label = format.format(drug.getDose());
+			doses.add(label);
+		}
+
+		Collections.sort(doses);
+		return doses;
+	}
 
 	public List<SelectItem> getDoses() {
 		List<SelectItem> items = new ArrayList<SelectItem>();
@@ -58,9 +83,6 @@ public class DrugFace {
 				return ((String)o1.getValue()).compareTo((String)o2.getValue()); 
 			}		
 		});
-		
-		// Added ? so user can add a new value:
-		items.add(new SelectItem("", "?"));
 		
 		return items;
 	}

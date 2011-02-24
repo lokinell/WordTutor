@@ -14,6 +14,37 @@
 		<h:outputText value="#{i18n['editRecipe.title']}"></h:outputText>
 	</ui:define>
 	<ui:define name="content">
+		<style  type="text/css">
+.rich-combobox-button-background-disabled {
+	display: none;
+	width: 0px;
+	height: 0px;
+}
+
+.rich-combobox-button-background-inactive {
+	display: none;
+	width: 0px;
+	height: 0px;
+}
+
+.rich-combobox-button-inactive {
+	width: 0px;
+}
+
+.rich-combobox-button-background {
+	display: none;
+	width: 0px;
+	height: 0px;
+}
+
+.rich-combobox-input {
+	width: 100%;
+}
+
+.rich-combobox-item {
+	width: 100%;
+}
+</style>
 		<h:form id="main" prependId="false">
 			<h:panelGrid columns="2"
 				columnClasses="prescribeFirst, prescribeSecond">
@@ -26,13 +57,19 @@
 						value="#{prescriptionManager.prescription.drugs}"
 						rowKeyVar="recipeIndex" columns="1">
 						<h:panelGrid id="drug" columns="3">
-							<h:outputText 
+							<h:outputText
 								value="${prescriptionManager.prescription.drugs[recipeIndex].herb.name}" />
-							<h:inputText id="doseInput" value="#{prescriptionManager.drugs[recipeIndex].dose}"
-							     size="4" onkeyup="value=value.replace(/[^\d.]/g, '')"
-								 onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d.]/g,'')) ">
-                                <f:validateDoubleRange minimum="1" maximum="100" />
-                            </h:inputText>
+							<rich:comboBox id="doseInput" width="50px"
+							    directInputSuggestions="true" 
+								inputStyle="width:100%" buttonStyle="display:none;width:0px;"
+								buttonDisabledStyle="display:none;width:0px;"
+								buttonInactiveStyle="display:none:width:0px;"
+								value="#{prescriptionManager.drugs[recipeIndex].dose}">
+								<f:selectItems
+									value="#{prescriptionManager.drugs[recipeIndex].doses}"
+									var="doseItem">
+								</f:selectItems>
+							</rich:comboBox>
 							<a4j:commandButton value="x"
 								title="从处方上删除【#{prescriptionManager.prescription.drugs[recipeIndex].herb.name}】"
 								action="#{prescriptionManager.onRemoveDrug}"
@@ -42,11 +79,9 @@
 							</a4j:commandButton>
 						</h:panelGrid>
 					</rich:dataGrid>
-					<div align="center">
-					<h:inputText id="filter" width="200px"
+					<div align="center"><h:inputText id="filter" width="200px"
 						value="#{prescriptionManager.filter}">
-					</h:inputText> 
-					<rich:suggestionbox id="suggestionBoxId" for="filter"
+					</h:inputText> <rich:suggestionbox id="suggestionBoxId" for="filter"
 						suggestionAction="#{prescriptionManager.suggest}" var="herb"
 						minChars="2" status="none" nothingLabel="没找到匹配的药"
 						fetchValue="#{herb.name}">
