@@ -2,6 +2,10 @@ function focusNewHerb(index){
 	$('recipeGrid:'+index+':doseInputcomboboxField').focus();
 }
 
+function focusFilter(){
+	$('filter').focus();
+}
+
 function printPartOfDocument() {
 	this.init.apply(this, arguments);
 }

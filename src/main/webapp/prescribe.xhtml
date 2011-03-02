@@ -69,6 +69,7 @@
 									value="#{prescriptionManager.drugs[recipeIndex].doses}"
 									var="doseItem">
 								</f:selectItems>
+								<a4j:support event="onchange" oncomplete="focusFilter()" reRender="doseInput"></a4j:support>
 							</rich:comboBox>
 							<a4j:commandButton value="x"
 								title="从处方上删除【#{prescriptionManager.prescription.drugs[recipeIndex].herb.name}】"
