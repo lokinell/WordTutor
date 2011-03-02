@@ -3,6 +3,7 @@ package clinic.controller;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -10,6 +11,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.persistence.EntityManager;
+
+import org.richfaces.model.selection.SimpleSelection;
 
 import clinic.model.Drug;
 import clinic.model.DrugFace;
@@ -37,6 +40,8 @@ public class PrescriptionManager extends AbstractManager {
 
 	// The list of the buttons to be updated
 	private Set<Integer> updates = new HashSet<Integer>();
+	
+	private SimpleSelection selection = new SimpleSelection();
 
 	public PrescriptionManager() {
 		super();
@@ -122,6 +127,14 @@ public class PrescriptionManager extends AbstractManager {
 		}
 	}
 	
+	public String createPrescription(){
+		return "prescribe";
+	}
+	
+	public List<Prescription> getRecipesByPatient() throws ManagerException {
+		return null;
+	}
+	
 	
 	public int getPrescriptDrugsIndex(){
 		return prescription.getDrugs().size()-1;
@@ -196,5 +209,39 @@ public class PrescriptionManager extends AbstractManager {
 
 	public String getFilter() {
 		return filter;
+	}
+
+	public void setSelection(SimpleSelection selection) {
+		this.selection = selection;
+	}
+
+	public SimpleSelection getSelection() {
+		return selection;
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public String takeSelection() {
+		Iterator iter = getSelection().getKeys();
+		Object key = iter.next();
+		int index = Integer.parseInt(key.toString());
+		/*selectedRecipe = recipesOfSelectedPatient.get(index);
+		try {
+			List<MedicineInfo> mInfos = doInTransaction(new PersistenceAction<List<MedicineInfo>>() {
+
+				@SuppressWarnings("unchecked")
+				@Override
+				public List<MedicineInfo> execute(EntityManager em) {
+					Query q = em.createNamedQuery("MedicineInfo.byRecipeId");
+					q.setParameter("recipeID", selectedRecipe.getId());
+					return q.getResultList();
+				}
+			});
+			
+			setCurrentMedicineInfos(mInfos);
+		} catch (ManagerException e) {
+			e.printStackTrace();
+		}*/
+		
+		return null;
 	}
 }

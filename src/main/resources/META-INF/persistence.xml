@@ -5,11 +5,8 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <jta-data-source>jdbc/MySqlDS</jta-data-source>
     
-    <class>com.medicine.recipe.model.User</class>
-    <class>com.medicine.recipe.model.Medicine</class>
-    <class>com.medicine.recipe.model.MedicineInfo</class>
-    <class>com.medicine.recipe.model.Patient</class>
-    <class>com.medicine.recipe.model.Recipe</class>
+    <class>clinic.model.User</class>
+    <class>clinic.model.Patient</class>
     <class>clinic.model.Herb</class>
     <class>clinic.model.Prescription</class>
     <class>clinic.model.Drug</class>

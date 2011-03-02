@@ -14,58 +14,57 @@
 		<f:facet name="header">
 			<h:outputText value="处方明细" />
 		</f:facet>
-		<table id="recipeConten">
+		<table id="recipeContent">
 			<tr>
-				<td align="center" colspan="6">山东×××中医院</td>
+				<td align="center" colspan="6"><h3>山东×××中医院</h3></td>
 			</tr>
 			<tr>
 				<td align="center" colspan="6">门诊处方</td>
 			</tr>
 			<tr>
 				<td>【费 别】</td>
-				<td><h:outputText value="#{recipeBean.selectedRecipe.feeType}" /></td>
+				<td><h:outputText value="自费" /></td>
 				<td>【处方编号】</td>
 				<td colspan="3" align="center"><h:outputText
-					value="#{recipeBean.selectedRecipe.id}" /></td>
+					value="1222222" /></td>
 			</tr>
 			<tr>
 				<td>【科 室】</td>
-				<td colspan="2">内科</td>
 				<td colspan="3" align="center"><h:outputText
-					value="#{recipeBean.selectedRecipe.department}" /></td>
+					value="内科"/></td>
 			</tr>
 			<tr>
 				<td rowspan="2">【姓名】</td>
 				<td rowspan="2"><h:outputText
-					value="#{patientBean.currentPatient.name}" /></td>
+					value="张三" /></td>
 				<td>【性 别】</td>
-				<td><h:outputText value="#{patientBean.currentPatient.gender}" /></td>
+				<td><h:outputText value="男" /></td>
 				<td>【年 龄】</td>
-				<td><h:outputText value="#{patientBean.currentPatient.age}" /></td>
+				<td><h:outputText value="23" /></td>
 			</tr>
 			<tr>
 				<td>【门诊病历号】</td>
 				<td colspan="3" align="center"><h:outputText
-					value="#{patientBean.currentPatient.cardID}" /></td>
+					value="13412342134213" /></td>
 			</tr>
 			<tr>
 				<td colspan="3">【单位或家庭住址】</td>
 				<td colspan="3" align="center"><h:outputText
-					value="#{patientBean.currentPatient.address}" /></td>
+					value="某市某村" /></td>
 			</tr>
 			<tr>
 				<td colspan="3">【临床诊断及证型】</td>
 				<td colspan="3" align="center"><h:outputText
-					value="#{recipeBean.selectedRecipe.disease}" /></td>
+					value="拉肚子" /></td>
 			</tr>
 			<tr>
 				<td colspan="6" height="200px;" valign="top"><span>【RP】</span>
 				<rich:dataGrid id="recipeDetial"
-					value="#{recipeBean.currentMedicineInfos}" columns="2"
-					var="medicineInfo" rowKeyVar="mIndex">
+					value="#{prescriptionManager.prescription.drugs}" columns="2"
+					var="drug" rowKeyVar="mIndex">
 					<h:panelGrid columns="2">
-						<h:outputText value="#{medicineInfo.medicine.name}" />
-						<h:outputText value="#{medicineInfo.quantity}" />
+						<h:outputText value="#{drug.herb.name}" />
+						<h:outputText value="#{drug.dose}" />
 					</h:panelGrid>
 				</rich:dataGrid></td>
 			</tr>
@@ -98,7 +97,7 @@
 	</rich:panel>
 
 	<script type="text/javascript">
-                    new PrintPartOfDocument('mainForm:printRecipe', 'recipeConten');
+         new PrintPartOfDocument('mainForm:printRecipe', 'recipeContent');
     </script>
 </ui:composition>
 </html>

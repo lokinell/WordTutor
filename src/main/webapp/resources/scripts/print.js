@@ -1,15 +1,16 @@
-function focusNewHerb(index){
-	$('recipeGrid:'+index+':doseInputcomboboxField').focus();
+function focusNewHerb(index) {
+	$('recipeGrid:' + index + ':doseInputcomboboxField').focus();
 }
 
-function focusFilter(){
+function focusFilter() {
 	$('filter').focus();
 }
 
-function printPartOfDocument() {
+function PrintPartOfDocument() {
 	this.init.apply(this, arguments);
 }
-printPartOfDocument.prototype = {
+
+PrintPartOfDocument.prototype = {
 	init : function(o, part) {
 		this.o = this.getId(o);
 		this.part = this.getId(part);
@@ -56,15 +57,15 @@ printPartOfDocument.prototype = {
 		return printCss;
 	},
 	getId : function(el) {
-		return typeof el == 'string' ? document.getElementById(el) : el
+		return typeof el == 'string' ? document.getElementById(el) : el;
 	},
 	addEvent : function(o, type, fn) {
 		if (o.addEventListener) {
-			o.addEventListener(type, fn, false)
+			o.addEventListener(type, fn, false);
 		} else if (o.attachEvent) {
 			o.attachEvent('on' + type, function() {
-				fn.call(o, window.event)
-			})
+				fn.call(o, window.event);
+			});
 		}
 	}
-}
+};

@@ -30,16 +30,16 @@
 					</f:facet>
 					<rich:toolBar id="toolbar" height="30">
 						<h:commandButton id="newRecipe" value="新建处方"
-							action="#{recipeBean.newRecipe}"
+							action="#{prescriptionManager.createPrescription}"
 							disabled="#{patientBean.disabled}" />
 						<h:commandButton id="printRecipe" value="打印处方" />
 					</rich:toolBar>
 					<rich:scrollableDataTable id="recipeGrid" selectionMode="single"
-						value="#{recipeBean.recipesByPatient}" width="298px" height="575px"
-						selection="#{recipeBean.selection}" var="recipe"
+						value="#{prescriptionManager.recipesByPatient}" width="298px" height="575px"
+						selection="#{prescriptionManager.selection}" var="recipe"
 						rowKeyVar="recipeIndex">
 						<a4j:support event="onselectionchange"
-							actionListener="#{recipeBean.takeSelection}"
+							actionListener="#{prescriptionManager.takeSelection}"
 							reRender="recipeDetial, toolbar">
 						</a4j:support>
 						<rich:column>
