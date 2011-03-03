@@ -32,12 +32,14 @@ PrintPartOfDocument.prototype = {
 		}
 		if (!this.printCss)
 			this.printCss = this.getPrintCss();
+		
 		setTimeout(function() {
 			_this.frame = document.getElementById('printIframe');
 			var d = _this.frame.contentWindow.document;
 			var h = d.getElementsByTagName('head')[0];
 			var b = d.getElementsByTagName('body')[0];
-
+			h.innerHTML = '';
+			
 			for ( var i = 0; i < _this.printCss.length; i++) {
 				h.appendChild(_this.printCss[i]);
 			}

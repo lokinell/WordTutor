@@ -170,7 +170,7 @@ public class PrescriptionManager extends AbstractManager {
 		drugs.clear();
 	}
 
-	public void onSave() {
+	public String onSave() {
 		try {
 			doInTransaction(new PersistenceActionWithoutResult() {
 				@Override
@@ -181,6 +181,7 @@ public class PrescriptionManager extends AbstractManager {
 			});
 		} catch (ManagerException e) {
 			e.printStackTrace();
+			return null;
 		}
 		
 		
@@ -188,6 +189,8 @@ public class PrescriptionManager extends AbstractManager {
 		for (Drug drug : drugs) {
 			herbManager.doStatistic(drug.getHerb());
 		}
+		
+		return "viewRecipe";
 		
 	}
 

@@ -1,5 +1,6 @@
 package clinic.model;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -8,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 /**
  * A {@link Prescription} consists of a number of {@link Herb}s called {@link Drug}s.
@@ -80,5 +82,19 @@ public class Prescription extends AbstractEntity {
 	public String toString() {
 		String date = creation != null ? creation.toString() : "unknown";
 		return "Prescription[create date: " + date +"]";
+	}
+
+	// 计算处方的价格
+	@Transient
+	public BigDecimal getPrice() {
+		BigDecimal price = new BigDecimal(0);
+		
+		for (Drug drug : drugs) {
+	       BigDecimal unitPrice = drug.getHerb().getUnitPrice();
+	       float dose = drug.getDose();
+	       price = price.add(unitPrice.multiply(new BigDecimal(dose)));
+		}
+		
+		return price;
 	}
 }
